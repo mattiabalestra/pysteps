@@ -538,9 +538,9 @@ def _scatter(pred, obs, axis=None):
     # compute multiplicative erros in dB
     q = 10 * np.log10(pred / obs)
 
-    # nans are given zero weight and are set equal to (min value - 1)
+    # nans are given zero weight and are set equal to the minimum value of floats
     idkeep = np.isfinite(q)
-    q[~idkeep] = q[idkeep].min() - 1
+    q[~idkeep] = np.finfo(float).tiny
     obs[~idkeep] = 0
 
     # compute scatter along rows
